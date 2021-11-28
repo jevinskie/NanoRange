@@ -70,7 +70,7 @@ struct drop_view
         return ranges::end(base_);
     }
 
-    template <typename RR = R, std::enable_if_t<range<const RR>, int> = 0>
+    template <typename RR = R, std::enable_if_t<range<const RR> && detail::simple_view<RR>, int> = 0>
     constexpr auto end()
     {
         return ranges::end(base_);
