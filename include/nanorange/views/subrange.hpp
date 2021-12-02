@@ -262,8 +262,8 @@ public:
     }
 
     template <typename II = I>
-    [[nodiscard]] constexpr auto prev(iter_difference_t<I> n = 1) const
-        -> std::enable_if_t<bidirectional_iterator<II>, subrange>
+    [[nodiscard]] constexpr subrange prev(iter_difference_t<I> n = 1) const
+        requires requires { bidirectional_iterator<II>; }
     {
         auto tmp = *this;
         tmp.advance(-n);
