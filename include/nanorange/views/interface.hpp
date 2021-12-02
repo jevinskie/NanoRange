@@ -107,36 +107,28 @@ public:
     }
 
     template <typename R = D>
-    requires requires() {
-        requires forward_range<R>;
-    }
+        requires forward_range<R>
     constexpr decltype(auto) front()
     {
         return *ranges::begin(derived());
     }
 
     template <typename R = D>
-    requires requires() {
-        requires forward_range<const R>;
-    }
+        requires forward_range<const R>
     constexpr decltype(auto) front() const
     {
         return *ranges::begin(derived());
     }
 
     template <typename R = D>
-    requires requires() {
-        requires bidirectional_range<R> && common_range<R>;
-    }
+        requires bidirectional_range<R> && common_range<R>
     constexpr decltype(auto) back()
     {
         return *ranges::prev(ranges::end(derived()));
     }
 
     template <typename R = D>
-    requires requires() {
-        requires bidirectional_range<const R> && common_range<const R>;
-    }
+        requires bidirectional_range<const R> && common_range<const R>
     constexpr decltype(auto) back() const
     {
         return *ranges::prev(ranges::end(derived()));

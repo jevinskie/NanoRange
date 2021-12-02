@@ -270,24 +270,24 @@ namespace prev_ {
 
 struct fn {
     template <typename I>
-    constexpr auto operator()(I x) const
-        -> std::enable_if_t<bidirectional_iterator<I>, I>
+    constexpr I operator()(I x) const
+        requires bidirectional_iterator<I>
     {
         --x;
         return x;
     }
 
     template <typename I>
-    constexpr auto operator()(I x, iter_difference_t<I> n) const
-        -> std::enable_if_t<bidirectional_iterator<I>, I>
+    constexpr I operator()(I x, iter_difference_t<I> n) const
+        requires bidirectional_iterator<I>
     {
         ranges::advance(x, -n);
         return x;
     }
 
     template <typename I, typename S>
-    constexpr auto operator()(I x, iter_difference_t<I> n, S bound) const
-        -> std::enable_if_t<bidirectional_iterator<I> && sentinel_for<S, I>, I>
+    constexpr I operator()(I x, iter_difference_t<I> n, S bound) const
+        requires bidirectional_iterator<I> && sentinel_for<S, I>
     {
         ranges::advance(x, -n, bound);
         return x;
