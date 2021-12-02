@@ -106,27 +106,37 @@ public:
         return ranges::end(derived()) - ranges::begin(derived());
     }
 
-    template <typename R = D, typename = std::enable_if_t<forward_range<R>>>
+    template <typename R = D>
+    requires requires() {
+        requires forward_range<R>;
+    }
     constexpr decltype(auto) front()
     {
         return *ranges::begin(derived());
     }
 
-    template <typename R = D, typename = std::enable_if_t<forward_range<const R>>>
+    template <typename R = D>
+    requires requires() {
+        requires forward_range<const R>;
+    }
     constexpr decltype(auto) front() const
     {
         return *ranges::begin(derived());
     }
 
-    template <typename R = D, typename = std::enable_if_t<
-                                  bidirectional_range<R> && common_range<R>>>
+    template <typename R = D>
+    requires requires() {
+        requires bidirectional_range<R> && common_range<R>;
+    }
     constexpr decltype(auto) back()
     {
         return *ranges::prev(ranges::end(derived()));
     }
 
-    template <typename R = D, typename = std::enable_if_t<bidirectional_range<const R> &&
-                                          common_range<const R>>>
+    template <typename R = D>
+    requires requires() {
+        requires bidirectional_range<const R> && common_range<const R>;
+    }
     constexpr decltype(auto) back() const
     {
         return *ranges::prev(ranges::end(derived()));
