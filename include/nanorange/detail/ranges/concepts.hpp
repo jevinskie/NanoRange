@@ -131,59 +131,14 @@ template <typename R, typename T>
 NANO_CONCEPT output_range =
     decltype(detail::output_range_concept::test<R, T>(0))::value;
 
-namespace detail {
-
-struct input_range_concept {
-    template <typename>
-    static auto test(long) -> std::false_type;
-
-    template <typename T>
-    static auto test(int) -> std::enable_if_t<
-        range<T> && input_iterator<iterator_t<T>>,
-        std::true_type>;
-};
-
-}
+template <typename T>
+concept input_range = requires { range<T> && input_iterator<iterator_t<T>>; };
 
 template <typename T>
-NANO_CONCEPT input_range =
-    decltype(detail::input_range_concept::test<T>(0))::value;
-
-namespace detail {
-
-struct forward_range_concept {
-    template <typename>
-    static auto test(long) -> std::false_type;
-
-    template <typename T>
-    static auto test(int) -> std::enable_if_t<
-        input_range<T> && forward_iterator<iterator_t<T>>,
-        std::true_type>;
-};
-
-}
+concept forward_range = requires { input_range<T> && forward_iterator<iterator_t<T>>; };
 
 template <typename T>
-NANO_CONCEPT forward_range =
-    decltype(detail::forward_range_concept::test<T>(0))::value;
-
-namespace detail {
-
-struct bidirectional_range_concept {
-    template <typename>
-    static auto test(long) -> std::false_type;
-
-    template <typename T>
-    static auto test(int) -> std::enable_if_t<
-        forward_range<T> && bidirectional_iterator<iterator_t<T>>,
-        std::true_type>;
-};
-
-}
-
-template <typename T>
-NANO_CONCEPT bidirectional_range =
-    decltype(detail::bidirectional_range_concept::test<T>(0))::value;
+concept bidirectional_range = requires { forward_range<T> && bidirectional_iterator<iterator_t<T>>; };
 
 namespace detail {
 
