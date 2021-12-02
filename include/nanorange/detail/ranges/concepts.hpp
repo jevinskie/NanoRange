@@ -132,13 +132,13 @@ NANO_CONCEPT output_range =
     decltype(detail::output_range_concept::test<R, T>(0))::value;
 
 template <typename T>
-concept input_range = requires { range<T> && input_iterator<iterator_t<T>>; };
+concept input_range = requires { requires range<T> && input_iterator<iterator_t<T>>; };
 
 template <typename T>
-concept forward_range = requires { input_range<T> && forward_iterator<iterator_t<T>>; };
+concept forward_range = requires { requires input_range<T> && forward_iterator<iterator_t<T>>; };
 
 template <typename T>
-concept bidirectional_range = requires { forward_range<T> && bidirectional_iterator<iterator_t<T>>; };
+concept bidirectional_range = requires { requires forward_range<T> && bidirectional_iterator<iterator_t<T>>; };
 
 namespace detail {
 
